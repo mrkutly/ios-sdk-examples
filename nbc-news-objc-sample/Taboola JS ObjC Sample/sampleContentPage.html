@@ -2,17 +2,30 @@
     <head>
         <meta name='viewport' content='width=device-width, user-scalable=no' />
         <script type="text/javascript">
-            
-            !function (e, f, u, i) {
-                if (!document.getElementById(i)){
-                    e.async = 1;
-                    e.src = u;
-                    e.id = i;
-                    f.parentNode.insertBefore(e, f);
-                }
-            }(document.createElement('script'),
-              document.getElementsByTagName('script')[0],
-              'https://cdn.taboola.com/libtrc/betterbytheminute-app/mobile-loader.js','tb-mobile-loader-script');
+            var os = (function() {
+                      var userAgent = navigator.userAgent || navigator.vendor || window.opera;
+                      if (/windows phone/i.test(userAgent)) return 'Windows Phone';
+                      if (/android/i.test(userAgent)) return 'Android';
+                      if (/iPad|iPhone|iPod/.test(userAgent) && !window.MSStream) return 'iOS';
+                      return 'unknown';
+                      })()
+                      
+                      if(os === 'Android') {
+                          window.taboolaMobilePubName = 'nbcnewsappandroid';                        
+                      } else if (os === 'iOS'){
+                          window.taboolaMobilePubName = 'nbcnewsappios';
+                      }
+        
+        !function (e, f, u, i) {
+            if (!document.getElementById(i)){
+                e.async = 1;
+                e.src = u;
+                e.id = i;
+                f.parentNode.insertBefore(e, f);
+            }
+        }(document.createElement('script'),
+          document.getElementsByTagName('script')[0],
+          'https://cdn.taboola.com/libtrc/' + window.taboolaMobilePubName + '/mobile-loader.js','tb-mobile-loader-script');
             </script>
     </head>
     
@@ -33,7 +46,7 @@
         </p>
         <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla bibendum mauris eget odio fermentum, non elementum lectus dapibus. Mauris egestas euismod orci molestie aliquet. Curabitur posuere, ante rhoncus sodales suscipit, sem tellus viverra erat, et venenatis augue quam non diam. In aliquam arcu eget nisl imperdiet finibus. Nunc pharetra sapien felis, vitae aliquam lorem bibendum in. Donec lacinia blandit tellus quis rutrum. Vivamus mattis mollis porta. Ut eleifend nisi quis magna faucibus ultricies.
         </p>
-
+        
         <p>
         <a href="http://example.com">some link on the publisher page</a>
         </p>
@@ -42,7 +55,7 @@
         <div id='taboola2'>
         </div>
         
-
+        
         
         <script type='text/javascript'>
             window._taboola = window._taboola || [];
@@ -53,19 +66,19 @@
                           });
                           
                           _taboola.push({
-                                        mode: 'thumbnails-a',
+                                        mode: 'thumbnails-feed-mobile',
                                         container: 'taboola1',
                                         placement: 'placement1',
                                         target_type: 'mix'
                                         });
                                         
                                         _taboola.push({
-                                                      mode: 'thumbnails-feed',
+                                                      mode: 'thumbnails-feed-mobile',
                                                       container: 'taboola2',
-                                                      placement: 'feed-sample-app',
+                                                      placement: 'App Below Article Thumbnails',
                                                       target_type: 'mix'
                                                       });
-
+                                                      
                                                       
                                                       _taboola["mobile"] = [];
                                                       _taboola["mobile"].push({
@@ -73,15 +86,12 @@
                                                                               allow_sdkless_load:false,
                                                                               taboola_view_id:new Date().getTime(),
                                                                               // override publisher from script url
-                                                                              publisher:"betterbytheminute-app"
+                                                                              publisher:window.taboolaMobilePubName
                                                                               });
                                                                               
                                                                               _taboola.push({
                                                                                             flush: true
                                                                                             });
-                                                                                            
             </script>
     </body>
 </html>
-
-
